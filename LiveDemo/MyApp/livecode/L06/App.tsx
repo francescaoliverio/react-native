@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 async function fetchTodos() {
@@ -10,12 +10,22 @@ async function fetchTodos() {
   return res.json();
 }
 
+interface FlatListProps {
+  id: string
+  title: string
+  completed: boolean
+}
+
 export default function App() {
   const [status, setStatus] = React.useState("loading");
+  const [todos, setTodos] = React.useState<FlatListProps[]>([]);
 
   function load() {
     setStatus("loading");
-    fetchTodos().then();
+    fetchTodos().then((data) => {
+      setTodos(data);
+      setStatus("success");
+    }).catch((e) => setStatus("error"));
   }
 
   React.useEffect(() => {
@@ -28,6 +38,22 @@ export default function App() {
         <View>
           <Text style={styles.title}>TODOS</Text>
           {status === "loading" && <Text style={styles.text}>Loading...</Text>}
+          {status === "error" && (
+            <Pressable onPress={load} style={styles.button}>
+              <Text style={styles.text}>Retry</Text>
+            </Pressable>
+          )}
+          {status === "success" && (
+            <FlatList
+              data={todos}
+              keyExtractor={(item) => (item.id)}
+              renderItem={({ item }) => (
+                <Text style={styles.list}>
+                  {item.completed ? "✓" : "○"} {item.title}
+                </Text>
+              )}
+            />
+          )}
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -49,7 +75,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#43f",
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: "700",
     textAlign: "center",
     margin: 15,
@@ -58,4 +84,10 @@ const styles = StyleSheet.create({
     color: "#335",
     textAlign: "center",
   },
+  list: {
+    color: "#335",
+    lineHeight: 30,
+    fontSize: 18,
+    margin: 8,
+  }
 });
