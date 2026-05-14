@@ -21,7 +21,7 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <Avatar uri="https://picsm.photos/100" />
+          <Avatar uri="https://picsum.photos/100" />
           <Text style={styles.title}>Profile</Text>
           <Text style={styles.text}>Welcome back!</Text>
           <Pressable
