@@ -1,6 +1,4 @@
-import { StyleSheet, Switch, Text, TextInput, View } from "react-native";
-import { getStyles } from "../App";
-
+import { Switch, Text, TextInput, View } from "react-native";
 interface SettingRowProps {
   type: string;
   label: string;
