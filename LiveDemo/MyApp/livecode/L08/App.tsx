@@ -11,7 +11,7 @@ export default function App() {
   const handleFontSize = (text: string) => {
     const parsedValue = parseInt(text, 10);
     if (!isNaN(parsedValue)) {
-      setFontSize(parsedValue > 18 && parsedValue < 50 ? parsedValue : 18);
+      setFontSize(parsedValue > 12 && parsedValue < 50 ? parsedValue : 18);
     }
   };
   const styles = getStyles(darkMode, fontSize);
@@ -35,7 +35,7 @@ export const getStyles = (darkMode: boolean, fontSize: number) => {
       backgroundColor: darkMode ? "#225" : "white",
       borderColor: darkMode ? "white" : "#222",
       color: darkMode ? "white" : "#222",
-      fontSize: fontSize > 16 ? fontSize : 16,
+      fontSize: fontSize > 12 ? fontSize : 18,
     },
     title: {
       fontSize: 24,
